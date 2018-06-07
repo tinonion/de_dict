@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 class Main {
@@ -12,5 +14,7 @@ class Main {
             System.out.println("TRANSLATION: " + result.translation + " GENDER: " + result.gender + " POPULARITY: " + result.popularity);
             System.out.println("COLLECTION: " + result.collection);
         }
+
+        new TopFrame();
     }
 }

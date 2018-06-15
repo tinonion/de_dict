@@ -64,6 +64,9 @@ class Parser {
             }
         }
 
+        tran.gramType = tran.gramType.replace("{", "");
+        tran.gramType = tran.gramType.replace("}", "");
+
         if (!tran.gender.equals("")) {
             tran.gramType = "noun";
 
@@ -74,7 +77,7 @@ class Parser {
         return tran;
     }
 
-    static List<Translation> search(String query){
+    static ArrayList<Translation> search(String query){
         Document doc = null;
 
         try {
@@ -87,10 +90,26 @@ class Parser {
         }
 
         Elements headCells = doc.select(
-                "table[cellspacing='1'] > tbody > tr:has(td.td2, td.noline, td.td6) + tr[id]");
+                "table[cellspacing='1'] > tbody > tr:has(td.td2, td.noline, td.td6):not(:matches(Wörter)) + tr[id]");
 
-        List<Translation> results = new ArrayList<>();
-        results.add(constructTranslation(headCells.get(0)));
+        List<Integer> headIDs = new ArrayList<>();
+        headCells.forEach(cell -> headIDs.add(Integer.parseInt(cell
+            .id()
+            .substring(2))));
+
+        ArrayList<Translation> results = new ArrayList<>();
+        ArrayList<Element> seenCells = new ArrayList<>();
+        for (int headID : headIDs) {
+            for (int i = headID; i < headID + 3; i++) {
+                Element foundCell = doc.selectFirst(
+                        "table[cellspacing='1'] > tbody > tr[id=tr" + String.valueOf(i) + "]");
+
+                if (foundCell != null && !seenCells.contains(foundCell)) {
+                    seenCells.add(foundCell);
+                    results.add(constructTranslation(foundCell));
+                }
+            }
+        }
 
         return results;
     }

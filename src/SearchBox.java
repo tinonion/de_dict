@@ -24,6 +24,6 @@ class SearchBox extends JTextField implements ActionListener, FocusListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         TranslatorPanel parentPanel = (TranslatorPanel) getParent();
-        parentPanel.constructResultsSection(Parser.search(getText()));
+        parentPanel.populateResultsPanel(Parser.search(getText()));
     }
 }

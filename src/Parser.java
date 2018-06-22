@@ -69,21 +69,21 @@ class Parser {
 
         if (!tran.gender.equals("")) {
             tran.gramType = "noun";
+            tran.assignGender();
 
         } else if (tran.gramType.equals("verb")) {
             tran.root = "to ".concat(tran.root);
         }
 
+        tran.assignGramType();
         return tran;
     }
 
-    static ArrayList<Translation> search(String query){
+    static ArrayList<List<Translation>> search(String query){
         Document doc = null;
 
         try {
-            System.out.println("BEFORE REQUEST");
             doc = Jsoup.connect("https://www.dict.cc/?s=" + query).get();
-            System.out.println("AFTER REQUEST");
 
         } catch (IOException ex) {
             System.out.println("IOEXCEPTION THROWN");
@@ -97,17 +97,33 @@ class Parser {
             .id()
             .substring(2))));
 
-        ArrayList<Translation> results = new ArrayList<>();
-        ArrayList<Element> seenCells = new ArrayList<>();
-        for (int headID : headIDs) {
-            for (int i = headID; i < headID + 3; i++) {
-                Element foundCell = doc.selectFirst(
-                        "table[cellspacing='1'] > tbody > tr[id=tr" + String.valueOf(i) + "]");
+        ArrayList<List<Translation>> results = new ArrayList<>();
+        for (int i = 0; i < headCells.size(); i++) {
+            List<Translation> section = new ArrayList<>();
+            section.add(constructTranslation(headCells.get(i)));
 
-                if (foundCell != null && !seenCells.contains(foundCell)) {
-                    seenCells.add(foundCell);
-                    results.add(constructTranslation(foundCell));
+            for (int j = headIDs.get(i) + 1; j < headIDs.get(i) + 3; j++) {
+                if (!headIDs.contains(j)) {
+                    Element foundCell = doc.selectFirst(
+                            "table[cellspacing='1'] > tbody > tr[id=tr" + String.valueOf(j) + "]");
+
+                    if (foundCell != null) {
+                        section.add(constructTranslation(foundCell));
+                    }
+
+                } else {
+                    break;
                 }
+            }
+
+            for (Translation translation : new ArrayList<>(section)) {
+                if (translation.gramType == null) {
+                    section.remove(translation);
+                }
+            }
+
+            if (section.size() > 0) {
+                results.add(section);
             }
         }
 

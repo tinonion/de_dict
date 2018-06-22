@@ -1,69 +1,74 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 class TranslatorPanel extends JPanel {
 
-    private ArrayList<ResultsSection> currentSections = new ArrayList<>();
+    private JPanel resultsPanel = new JPanel();
 
     TranslatorPanel(){
         setLayout(new GridBagLayout());
         setBorder(BorderFactory.createLineBorder(Color.gray, 5));
+        setPreferredSize(new Dimension(320, 500));
 
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = c.weighty = 1;
-
-        SearchBox searchBox = new SearchBox();
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 2;
+        add(Box.createHorizontalStrut(10));
+
+        SearchBox searchBox = new SearchBox();
+        c.gridx = 1;
+        c.gridy = 0;
         c.anchor = GridBagConstraints.FIRST_LINE_START;
         add(searchBox, c);
+
+        resultsPanel.setLayout(new GridBagLayout());
+        c.gridx = 1;
+        c.gridy = 1;
+        add(resultsPanel, c);
     }
 
-    void constructResultsSection(ArrayList<Translation> results) {
-        currentSections.forEach(this::remove);
-        ArrayList<ResultsSection> sections = new ArrayList<>();
-
-        ArrayList<String> seenGramTypes = new ArrayList<>();
-        for (Translation result : results) {
-            if (!seenGramTypes.contains(result.gramType) && !result.gramType.equals("")) {
-                seenGramTypes.add(result.gramType);
-                ResultsSection newSection = new ResultsSection(result);
-
-                if (sections.size() == 0) {
-                    sections.add(newSection);
-                } else {
-                    for (int ind = 0; ind < sections.size(); ind++) {
-                        if (newSection.maxPopularity > sections.get(ind).maxPopularity) {
-                            sections.add(ind, newSection);
-                            break;
-                        }
-                    }
-                }
-            } else {
-                for (ResultsSection section : sections) {
-                    if (section.gramType.equals(result.gramType)) {
-                        section.addTranslation(result);
-                    }
-                }
-            }
-        }
+    void populateResultsPanel(ArrayList<List<Translation>> results) {
+        resultsPanel.removeAll();
 
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = 1;
-        c.gridheight = 3;
-        for (int ind = 0; ind < 3 && ind < sections.size(); ind++) {
-            c.gridy = ind * 4 + 2;
-            add(sections.get(ind), c);
-            currentSections.add(sections.get(ind));
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = c.weighty = 1;
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+
+        results.sort((section1, section2) -> section2.get(0).popularity - section1.get(0).popularity);
+
+        for (List<Translation> section : results) {
+            String title = section.get(0).gramType;
+            resultsPanel.add(new ResultsField(80, title), c);
+            c.gridy++;
+
+            for (int ind = 0; ind < section.size(); ind++) {
+                c.gridx = 0;
+                resultsPanel.add(new ResultsField(100, section.get(ind).root, ind), c);
+
+                c.gridx = 1;
+                resultsPanel.add(new ResultsField(30, section.get(ind).gender, ind), c);
+
+                c.gridx = 2;
+                resultsPanel.add(new ResultsField(120, section.get(ind).translation, ind), c);
+
+                c.gridx = 3;
+                resultsPanel.add(new ResultsField(50, String.valueOf(section.get(ind).popularity), ind), c);
+
+                c.gridx = 0;
+                c.gridy++;
+            }
+            resultsPanel.add(Box.createVerticalStrut(15), c);
+            c.gridy++;
         }
 
-        for (ResultsSection section : sections) {
-            System.out.println("TYPE: " + section.gramType);
-        }
-
+        c.gridx = 1;
+        c.gridy = 1;
+        resultsPanel.add(Box.createHorizontalStrut(10));
         revalidate();
     }
 }

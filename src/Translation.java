@@ -7,4 +7,50 @@ class Translation {
     String gramType;
     String contextAttr;
     int popularity;
+
+    void assignGramType() {
+        switch (gramType) {
+            case "adj":
+                gramType = "Adjective";
+                break;
+
+            case "noun":
+                gramType = "Noun";
+                break;
+
+            case "adv":
+                gramType = "Adverb";
+                break;
+
+            case "verb":
+                gramType = "Verb";
+                break;
+
+            case "pron":
+                gramType = "Pronoun";
+                break;
+
+            default:
+                gramType = null;
+                break;
+        }
+    }
+
+    void assignGender() {
+        if (gender.contains("{m}")) {
+            gender = "der";
+
+        } else if (gender.contains("{n}")) {
+            gender = "das";
+
+        } else if (gender.contains("{f}")) {
+            gender = "die";
+
+        } else if (gender.contains("{pl}")) {
+            gender = "plur";
+
+        } else {
+            gender = "genError";
+        }
+    }
 }

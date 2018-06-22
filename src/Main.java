@@ -27,7 +27,7 @@ class Main {
         contentPanel.add(bottomMenu, c);
 
         frame.setContentPane(contentPanel);
-        frame.setSize(1000, 700);
+        frame.setSize(600, 400);
         frame.setResizable(true);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -35,5 +35,9 @@ class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::constructAndShowGUI);
+
+        for (String font : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames()) {
+            //System.out.println(font);
+        }
     }
 }

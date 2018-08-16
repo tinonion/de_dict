@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 class SearchBox extends JTextField implements ActionListener, FocusListener {
 
@@ -24,6 +25,6 @@ class SearchBox extends JTextField implements ActionListener, FocusListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         TranslatorPanel parentPanel = (TranslatorPanel) getParent();
-        parentPanel.populateResultsPanel(Parser.search(getText()));
+        parentPanel.resultsPanel.populateResults(Database.generalQuery(getText()));
     }
 }

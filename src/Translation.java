@@ -8,7 +8,7 @@ class Translation {
     String contextAttr;
     int popularity;
 
-    void assignGramType() {
+    void setGramType() {
         switch (gramType) {
             case "adj":
                 gramType = "Adjective";
@@ -36,7 +36,7 @@ class Translation {
         }
     }
 
-    void assignGender() {
+    void setGender() {
         if (gender.contains("{m}")) {
             gender = "der";
 

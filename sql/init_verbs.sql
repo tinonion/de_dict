@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS irreg_verbs;
+DROP TABLE IF EXISTS special_verbs;
+
 CREATE TABLE IF NOT EXISTS irreg_verbs (
   infinitive VARCHAR(255),
   past_p VARCHAR(255),

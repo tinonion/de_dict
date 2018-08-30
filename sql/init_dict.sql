@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS dict;
+
 CREATE TABLE IF NOT EXISTS dict (
   de VARCHAR(255),
   de_implied VARCHAR(255),

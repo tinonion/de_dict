@@ -8,10 +8,9 @@ class TranslatorPanel extends JPanel {
     TranslatorPanel(){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createLineBorder(Color.gray, 5));
-        setPreferredSize(new Dimension(320, 500));
+        setAlignmentX(LEFT_ALIGNMENT);
 
         add(new SearchBox());
-        add(Box.createRigidArea(new Dimension(10, 20)));
         add(resultsPanel);
     }
 }

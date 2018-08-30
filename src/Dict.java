@@ -132,8 +132,9 @@ class Dict {
         if (chunkArray.length == 3) {
             return parseFullEntry(chunkArray);
 
-        } else {
+        }/* else {
             return parseConjugation(chunkArray);
-        }
+        }*/
+        return null;
     }
 }

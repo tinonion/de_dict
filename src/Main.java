@@ -19,27 +19,11 @@ class Main {
         });
 
 
-        JPanel contentPanel = new JPanel(new BorderLayout());
-        contentPanel.setLayout(new GridBagLayout());
+        JPanel contentPanel = new TranslatorPanel();
         contentPanel.setBorder(BorderFactory.createLineBorder(Color.gray, 5));
 
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.weighty = 1;
-        c.weightx = 1;
-
-        c.gridy = 0;
-        c.gridx = 1;
-        TranslatorPanel translatorPanel = new TranslatorPanel();
-        contentPanel.add(translatorPanel, c);
-
-        c.gridx = 0;
-        JPanel leftMenu = new JPanel();
-        leftMenu.setBorder(BorderFactory.createLineBorder(Color.gray, 5));
-        contentPanel.add(leftMenu, c);
-
         mainWindow.setContentPane(contentPanel);
-        mainWindow.setSize(600, 500);
+        mainWindow.setSize(520, 425);
         mainWindow.setResizable(false);
         mainWindow.setVisible(true);
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -54,7 +38,8 @@ class Main {
     public static void main(String[] args) {
         try {
             Database.initialize();
-            //Database.generateDatabase("dict.txt");
+            Database.generateDatabase("dict.txt");
+            //Database.closeConnection();
 
             SwingUtilities.invokeLater(Main::constructAndShowGUI);
 

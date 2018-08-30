@@ -1,5 +1,6 @@
+import javafx.scene.Parent;
+
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,6 @@ class ResultsPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(300, 270));
         setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         setAlignmentX(LEFT_ALIGNMENT);
     }
@@ -59,10 +59,13 @@ class ResultsPanel extends JPanel {
             for (int rowLoc = 0; rowLoc < sections.get(gramTypeTitle).size(); rowLoc++) {
                 ArrayList<String> rowData = sections.get(gramTypeTitle).get(rowLoc);
 
-                JPanel resultsRow = new JPanel();
+                JPanel resultsRow = new JPanel() {
+                    @Override
+                    public Dimension getMaximumSize() {
+                        return new Dimension(310, 20);
+                    }
+                };
                 resultsRow.setLayout(new BoxLayout(resultsRow, BoxLayout.X_AXIS));
-                resultsRow.setMaximumSize(new Dimension(310, 20));
-                setAlignmentX(LEFT_ALIGNMENT);
 
                 resultsRow.add(new ResultsField(120, rowData.get(0), rowLoc));
                 resultsRow.add(new ResultsField(40, rowData.get(1), rowLoc));
@@ -74,5 +77,21 @@ class ResultsPanel extends JPanel {
             add(Box.createRigidArea(new Dimension(200, 15)));
         }
         revalidate();
+        repaint();
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(getParent().getWidth(), 405);
+    }
+
+    @Override
+    public Dimension getMinimumSize() {
+        return new Dimension(getParent().getWidth(), 405);
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        return new Dimension(getParent().getWidth(), 405);
     }
 }

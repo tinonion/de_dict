@@ -1,9 +1,12 @@
 import javax.swing.*;
+import javax.swing.event.MouseInputListener;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
-class ResultsField extends JTextPane {
+class ResultsField extends JTextPane implements MouseInputListener {
 
     private Dimension size;
+    private int rowLoc; // Used primarily to determine what color to paint field
 
     ResultsField(int preferredWidth, String text) {
         setEditable(false);
@@ -26,7 +29,25 @@ class ResultsField extends JTextPane {
         }
 
         if (rowLoc % 2 == 0) {
-            setBackground(new Color(230, 220, 255));
+            setBackground(new Color(210, 200, 255));
+        }
+    }
+
+    public void highlight() {
+        if (rowLoc % 2 == 0) {
+            setBackground(new Color(190, 180, 245));
+
+        } else {
+            setBackground(new Color(245, 245, 245));
+        }
+    }
+
+    public void unhighlight() {
+        if (rowLoc % 2 == 0) {
+            setBackground(new Color(210, 200, 255));
+
+        } else {
+            setBackground(new Color(255, 255, 255));
         }
     }
 
@@ -43,5 +64,40 @@ class ResultsField extends JTextPane {
     @Override
     public Dimension getMinimumSize() {
         return size;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println('c');
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        System.out.println("df");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 }

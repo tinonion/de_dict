@@ -1,5 +1,3 @@
-import javafx.scene.Parent;
-
 import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
@@ -10,11 +8,11 @@ import java.util.HashMap;
 class ResultsPanel extends JPanel {
 
     ResultsPanel() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        setBackground(Color.WHITE);
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
-        setAlignmentX(LEFT_ALIGNMENT);
+        setBackground(Color.blue);
+
+
     }
 
     private HashMap<String, ArrayList<ArrayList<String>>> generateSections(ResultSet results) {
@@ -35,8 +33,10 @@ class ResultsPanel extends JPanel {
                 ArrayList<String> rowData = new ArrayList<>();
 
                 rowData.add(results.getString(5));
+                rowData.add(results.getString(7));
                 rowData.add(results.getString(3));
                 rowData.add(results.getString(1));
+                rowData.add(results.getString(4));
                 rowData.add("N/A");
 
                 sections.get(gramType).add(rowData);
@@ -59,19 +59,7 @@ class ResultsPanel extends JPanel {
             for (int rowLoc = 0; rowLoc < sections.get(gramTypeTitle).size(); rowLoc++) {
                 ArrayList<String> rowData = sections.get(gramTypeTitle).get(rowLoc);
 
-                JPanel resultsRow = new JPanel() {
-                    @Override
-                    public Dimension getMaximumSize() {
-                        return new Dimension(310, 20);
-                    }
-                };
-                resultsRow.setLayout(new BoxLayout(resultsRow, BoxLayout.X_AXIS));
-
-                resultsRow.add(new ResultsField(120, rowData.get(0), rowLoc));
-                resultsRow.add(new ResultsField(40, rowData.get(1), rowLoc));
-                resultsRow.add(new ResultsField(120, rowData.get(2), rowLoc));
-                resultsRow.add(new ResultsField(50, rowData.get(3), rowLoc));
-
+                ResultsRow resultsRow = new ResultsRow(rowData, rowLoc);
                 add(resultsRow);
             }
             add(Box.createRigidArea(new Dimension(200, 15)));
@@ -82,16 +70,16 @@ class ResultsPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(getParent().getWidth(), 405);
+        return new Dimension(getParent().getWidth(), 390);
     }
 
     @Override
     public Dimension getMinimumSize() {
-        return new Dimension(getParent().getWidth(), 405);
+        return new Dimension(getParent().getWidth(), 390);
     }
 
     @Override
     public Dimension getMaximumSize() {
-        return new Dimension(getParent().getWidth(), 405);
+        return new Dimension(getParent().getWidth(), 390);
     }
 }

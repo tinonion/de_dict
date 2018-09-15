@@ -1,4 +1,4 @@
-INSERT INTO irreg_verbs VALUES ('backen', 'gebacken', 'backte', FALSE, FALSE);
+INSERT INTO irreg_verbs VALUES ('backen', 'gebacken', 'back', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('befehlen', 'befohlen', 'befahl', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('beginnen', 'begonnen', 'begann', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('beißen', 'gebissen', 'biss', FALSE, FALSE);
@@ -60,7 +60,7 @@ INSERT INTO irreg_verbs VALUES ('hauen', 'gehauen', 'hieb', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('heben', 'gehoben', 'hob', FALSE, TRUE);
 INSERT INTO irreg_verbs VALUES ('heißen', 'geheißen', 'hieß', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('helfen', 'geholfen', 'half', FALSE, FALSE);
-INSERT INTO irreg_verbs VALUES ('kennen', 'gekannt', 'kannte', TRUE, FALSE);
+INSERT INTO irreg_verbs VALUES ('kennen', 'gekannt', 'kann', TRUE, FALSE);
 INSERT INTO irreg_verbs VALUES ('klingen', 'geklungen', 'klang', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('kneifen', 'gekniffen', 'kniff', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('kommen', 'gekommen', 'kam', FALSE, FALSE);
@@ -72,9 +72,9 @@ INSERT INTO irreg_verbs VALUES ('leihen', 'geliehen', 'lieh', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('lesen', 'gelesen', 'las', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('liegen', 'gelegen', 'lag', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('lügen', 'gelogen', 'log', FALSE, FALSE);
-INSERT INTO irreg_verbs VALUES ('mahlen', 'gemahlen', 'mahlte', FALSE, FALSE);
+INSERT INTO irreg_verbs VALUES ('mahlen', 'gemahlen', 'mahl', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('meiden', 'gemieden', 'mied', FALSE, FALSE);
-INSERT INTO irreg_verbs VALUES ('melken', 'gemolken', 'melkte', FALSE, FALSE);
+INSERT INTO irreg_verbs VALUES ('melken', 'gemolken', 'melk', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('messen', 'gemessen', 'maß', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('misslingen', 'misslungen', 'misslang', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('mögen', 'gemocht', 'moch', FALSE, TRUE);
@@ -93,7 +93,7 @@ INSERT INTO irreg_verbs VALUES ('riechen', 'gerochen', 'roch', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('ringen', 'gerungen', 'rang', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('rinnen', 'geronnen', 'rann', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('rufen', 'gerufen', 'rief', FALSE, FALSE);
-INSERT INTO irreg_verbs VALUES ('salzen', 'gesalzen', 'salzte', FALSE, FALSE);
+INSERT INTO irreg_verbs VALUES ('salzen', 'gesalzen', 'salz', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('saufen', 'gesoffen', 'soff', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('saugen', 'gesogen', 'sog', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('schaffen', 'geschaffen', 'schuf', FALSE, FALSE);
@@ -104,7 +104,7 @@ INSERT INTO irreg_verbs VALUES ('schelten', 'gescholten', 'schalt', FALSE, FALSE
 INSERT INTO irreg_verbs VALUES ('scheren', 'geschoren', 'schor', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('schieben', 'geschoben', 'schob', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('schießen', 'geschossen', 'schoss', FALSE, FALSE);
-INSERT INTO irreg_verbs VALUES ('schinden', 'geschunden', 'schindete', FALSE, FALSE);
+INSERT INTO irreg_verbs VALUES ('schinden', 'geschunden', 'schinde', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('schlafen', 'geschlafen', 'schlief', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('schlagen', 'geschlagen', 'schlug', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('schleichen', 'geschlichen', 'schlich', FALSE, FALSE);
@@ -126,13 +126,13 @@ INSERT INTO irreg_verbs VALUES ('schwören', 'geschworen', 'schwor', FALSE, FALS
 INSERT INTO irreg_verbs VALUES ('sehen', 'gesehen', 'sah', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('sein', 'gewesen', 'war', FALSE, TRUE);
 INSERT INTO irreg_verbs VALUES ('senden', 'gesandt', 'sand', TRUE, FALSE);
-INSERT INTO irreg_verbs VALUES ('sieden', 'gesotten', 'siedete', FALSE, FALSE);
+INSERT INTO irreg_verbs VALUES ('sieden', 'gesotten', 'siede', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('singen', 'gesungen', 'sang', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('sinken', 'gesunken', 'sank', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('sinnen', 'gesonnen', 'sann', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('sitzen', 'gesessen', 'saß', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('sollen', 'gesollt', 'sollte', FALSE, TRUE);
-INSERT INTO irreg_verbs VALUES ('spalten', 'gespalten', 'spaltete', FALSE, FALSE);
+INSERT INTO irreg_verbs VALUES ('spalten', 'gespalten', 'spalte', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('speien', 'gespien', 'spie', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('spinnen', 'gesponnen', 'spann', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('sprechen', 'gesprochen', 'sprach', FALSE, FALSE);
@@ -164,25 +164,35 @@ INSERT INTO irreg_verbs VALUES ('wägen', 'gewogen', 'wog', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('waschen', 'gewaschen', 'wusch', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('weichen', 'gewichen', 'wich', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('weisen', 'gewiesen', 'wies', FALSE, FALSE);
-INSERT INTO irreg_verbs VALUES ('wenden', 'gewandt', 'wandte', TRUE, FALSE);
+INSERT INTO irreg_verbs VALUES ('wenden', 'gewandt', 'wand', TRUE, FALSE);
 INSERT INTO irreg_verbs VALUES ('werben', 'geworben', 'warb', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('werden', 'geworden', 'wurde', FALSE, TRUE);
 INSERT INTO irreg_verbs VALUES ('werfen', 'geworfen', 'warf', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('wiegen', 'gewogen', 'wog', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('winden', 'gewunden', 'wand', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('wissen', 'gewusst', 'wuss', TRUE, TRUE);
-INSERT INTO irreg_verbs VALUES ('wollen', 'gewollt', 'wollte', FALSE, TRUE);
+INSERT INTO irreg_verbs VALUES ('wollen', 'gewollt', 'woll', FALSE, TRUE);
 INSERT INTO irreg_verbs VALUES ('wringen', 'gewrungen', 'wrang', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('ziehen', 'gezogen', 'zog', FALSE, FALSE);
 INSERT INTO irreg_verbs VALUES ('zwingen', 'gezwungen', 'zwang', FALSE, FALSE);
 
-INSERT INTO special_verbs VALUES ('dürfen', TRUE, FALSE, 'darf', 'darfst', 'darf', 'dürfen', 'dürft', 'dürfen', 0);
-INSERT INTO special_verbs VALUES('haben', FALSE, TRUE, 'habe', 'hast', 'hat', 'haben', 'habt', 'haben', 0);
-INSERT INTO special_verbs VALUES('können', TRUE, FALSE, 'kann', 'kannst', 'kann', 'können', 'könnt', 'können', 0);
-INSERT INTO special_verbs VALUES('mögen', TRUE, FALSE, 'mag', 'magst', 'mag', 'mögen', 'mögt', 'mögen', 0);
-INSERT INTO special_verbs VALUES('müssen', TRUE, FALSE, 'muss', 'musst', 'muss', 'müssen', 'müsst', 'müssen', 0);
-INSERT INTO special_verbs VALUES('sein', FALSE, TRUE, 'bin', 'bist', 'ist', 'sind', 'seid', 'sind', 1);
-INSERT INTO special_verbs VALUES('sollen', TRUE, FALSE, 'soll', 'sollst', 'soll', 'sollen', 'sollt', 'sollen', 0);
-INSERT INTO special_verbs VALUES('werden', FALSE, TRUE, 'werde', 'wirst', 'wird', 'werden', 'werdet', 'werden', 2);
-INSERT INTO special_verbs VALUES('wissen', FALSE, FALSE, 'weiß', 'weißt', 'weiß', 'wissen', 'wisst', 'wissen', 0);
-INSERT INTO special_verbs VALUES('wollen', TRUE, FALSE, 'will', 'willst', 'will', 'wollen', 'wollt', 'wollen', 0);
+INSERT INTO special_verbs VALUES ('dürfen', TRUE, FALSE, 'darf', 'darfst', 'darf', 'dürfen', 'dürft', 'dürfen',
+  'durfte', 'durftest', 'durftet', 'durften', 'duftet', 'durften');
+INSERT INTO special_verbs VALUES('haben', FALSE, TRUE, 'habe', 'hast', 'hat', 'haben', 'habt', 'haben',
+  'hatte', 'hattest', 'hatte', 'hatten', 'hattet', 'hatten');
+INSERT INTO special_verbs VALUES('können', TRUE, FALSE, 'kann', 'kannst', 'kann', 'können', 'könnt', 'können',
+  'konnte', 'konntest', 'konnte', 'konnten', 'konntet', 'konnten');
+INSERT INTO special_verbs VALUES('mögen', TRUE, FALSE, 'mag', 'magst', 'mag', 'mögen', 'mögt', 'mögen',
+  'mochte', 'mochtest', 'mochte', 'mochten', 'mochtet', 'mochten');
+INSERT INTO special_verbs VALUES('müssen', TRUE, FALSE, 'muss', 'musst', 'muss', 'müssen', 'müsst', 'müssen',
+  'musste', 'musstest', 'musste', 'mussten', 'musstet', 'mussten');
+INSERT INTO special_verbs VALUES('sein', FALSE, TRUE, 'bin', 'bist', 'ist', 'sind', 'seid', 'sind',
+  'war', 'warst', 'war', 'waren', 'wart', 'waren');
+INSERT INTO special_verbs VALUES('sollen', TRUE, FALSE, 'soll', 'sollst', 'soll', 'sollen', 'sollt', 'sollen',
+  'sollte', 'sollten', 'sollte', 'sollten', 'solltet', 'sollten');
+INSERT INTO special_verbs VALUES('werden', FALSE, TRUE, 'werde', 'wirst', 'wird', 'werden', 'werdet', 'werden',
+  'wurde', 'wurdest', 'wurde', 'wurden', 'wurdet', 'wurden');
+INSERT INTO special_verbs VALUES('wissen', FALSE, FALSE, 'weiß', 'weißt', 'weiß', 'wissen', 'wisst', 'wissen',
+  'wusste', 'wusstest', 'wusste', 'wussten', 'wusstet', 'wussten');
+INSERT INTO special_verbs VALUES('wollen', TRUE, FALSE, 'will', 'willst', 'will', 'wollen', 'wollt', 'wollen',
+  'wollte', 'wolltest', 'wollte', 'wollten', 'wolltet', 'wollten');

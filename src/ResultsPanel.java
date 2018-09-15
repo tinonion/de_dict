@@ -23,7 +23,7 @@ class ResultsPanel extends JPanel {
                 String gramType = results.getString(8);
 
                 // Checks if sections are too large before continuing
-                if (sections.containsKey(gramType) && sections.get(gramType).size() >= 3) {
+                if (sections.containsKey(gramType) && sections.get(gramType).size() >= 5) {
                     continue;
 
                 } else if (!sections.containsKey(gramType)) {

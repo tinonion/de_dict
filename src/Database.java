@@ -1,22 +1,17 @@
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.CharSequenceReader;
-
 import javax.swing.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.*;
+import java.util.Arrays;
 
 class Database {
 
     private static Connection con;
     private static PreparedStatement generalQueryStatement;
-    private static PreparedStatement queryVerbExceptions;
+    private static PreparedStatement queryIrregVerbs;
+    private static PreparedStatement querySpecialVerbs;
 
     static void initialize() throws SQLException, IOException {
-        con = DriverManager.getConnection("jdbc:hsqldb:file:database", "SA", "");
+        con = DriverManager.getConnection("jdbc:hsqldb:file:db/database", "SA", "");
 
         // Following block is used in executable jar version of project
 //        InputStream initDict = Database.class.getResourceAsStream("init_dict.sql");
@@ -34,8 +29,10 @@ class Database {
         }
 
         generalQueryStatement = con.prepareCall("SELECT * FROM DICT WHERE EN = ?;");
-        queryVerbExceptions = con.prepareCall(
-                "SELECT * FROM IRREG_VERBS, SPECIAL_VERBS WHERE INFINITIVE = ?;");
+        queryIrregVerbs = con.prepareCall(
+                "SELECT * FROM IRREG_VERBS WHERE INFINITIVE = ?;");
+        querySpecialVerbs = con.prepareCall(
+                "SELECT * FROM SPECIAL_VERBS WHERE INFINITIVE = ?;");
     }
 
     static void verifyDatabase() {
@@ -56,13 +53,15 @@ class Database {
     }
 
     private static boolean isValidDictEntry(String[] valueArray) {
+        if (valueArray[0].equals("nennen")) {
+            System.out.println(Arrays.toString(valueArray));
+        }
         return !valueArray[0].equals("") && !valueArray[4].equals("") && !valueArray[7].equals("");
     }
 
     static void generateDatabase() {
         try {
             PreparedStatement insertDictEntry = con.prepareCall("INSERT INTO dict VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-
 
             // Following block is used for executable jar version of project
 //            InputStream dictStream = Database.class.getResourceAsStream("dict.txt");
@@ -76,18 +75,7 @@ class Database {
                 String[] foundDictValues = Dict.parseLine(line);
 
                 if (foundDictValues != null && isValidDictEntry(foundDictValues)) {
-                    // Checks if verb is already in the verb exception tables
-                    if (foundDictValues[7].equals("verb")) {
-                        queryVerbExceptions.setString(1, foundDictValues[0]);
-
-                        ResultSet verbExceptionCheck = queryVerbExceptions.executeQuery();
-                        if (verbExceptionCheck.next()) {
-                            continue;
-                        }
-                    }
-
                     insertDictEntry.clearParameters();
-
                     for (int ind = 0; ind < 8; ind++) {
                         insertDictEntry.setString(ind + 1, foundDictValues[ind]);
                     }
@@ -109,6 +97,25 @@ class Database {
 
         } catch (SQLException ex) {
             System.out.println("SQL EXCEPTION ON GENERAL QUERY");
+            return null;
+        }
+    }
+
+    static ResultSet irregVerbQuery(String infinitive) {
+        return getResultSet(infinitive, queryIrregVerbs);
+    }
+
+    static ResultSet specialVerbQuery(String infinitive) {
+        return getResultSet(infinitive, querySpecialVerbs);
+    }
+
+    private static ResultSet getResultSet(String infinitive, PreparedStatement querySpecialVerbs) {
+        try {
+            querySpecialVerbs.setString(1, infinitive);
+            return querySpecialVerbs.executeQuery();
+
+        } catch (SQLException ex){
+            ex.printStackTrace();
             return null;
         }
     }

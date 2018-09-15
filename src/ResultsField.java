@@ -7,6 +7,7 @@ class ResultsField extends JTextPane implements MouseInputListener {
 
     private Dimension size;
     private int rowLoc; // Used primarily to determine what color to paint field
+    public String text;
 
     ResultsField(int preferredWidth, String text) {
         setEditable(false);
@@ -49,6 +50,12 @@ class ResultsField extends JTextPane implements MouseInputListener {
         } else {
             setBackground(new Color(255, 255, 255));
         }
+    }
+
+    @Override
+    public void setText(String t) {
+        super.setText(t);
+        this.text = t;
     }
 
     @Override

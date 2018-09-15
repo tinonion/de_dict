@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
-import org.apache.commons.io.FileUtils;
 
 class Main {
 
@@ -34,7 +33,7 @@ class Main {
 
         mainWindow.setResizable(false);
         mainWindow.setVisible(true);
-        mainWindow.setSize(550, 400);
+        mainWindow.setSize(980, 400);
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         Database.verifyDatabase();
@@ -47,7 +46,6 @@ class Main {
 
     public static void main(String[] args) {
         try {
-            System.out.println(System.getProperty("user.dir"));
             Database.initialize();
             SwingUtilities.invokeLater(Main::constructAndShowGUI);
 

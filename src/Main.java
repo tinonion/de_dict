@@ -33,7 +33,7 @@ class Main {
 
         mainWindow.setResizable(false);
         mainWindow.setVisible(true);
-        mainWindow.setSize(980, 400);
+        mainWindow.setSize(990, 400);
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         Database.verifyDatabase();

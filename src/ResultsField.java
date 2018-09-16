@@ -34,7 +34,7 @@ class ResultsField extends JTextPane implements MouseInputListener {
         }
     }
 
-    public void highlight() {
+    void highlight() {
         if (rowLoc % 2 == 0) {
             setBackground(new Color(190, 180, 245));
 
@@ -43,7 +43,7 @@ class ResultsField extends JTextPane implements MouseInputListener {
         }
     }
 
-    public void unhighlight() {
+    void unhighlight() {
         if (rowLoc % 2 == 0) {
             setBackground(new Color(210, 200, 255));
 

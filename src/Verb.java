@@ -34,7 +34,6 @@ class Verb {
             verbRoot = m.group(3);
 
         } else {
-            System.out.println("NO ROOT FOUND FOR " + infinitive);
             return null;
         }
 

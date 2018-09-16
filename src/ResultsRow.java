@@ -3,9 +3,13 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 
-class ResultsRow extends JLabel implements MouseListener {
+class ResultsRow extends JPanel implements MouseListener {
 
+    List<ResultsRow> contentRows;
+    int layer;
+    private boolean expanded;
     private Component[] fields;
     private String deContext;
     private String enContext;
@@ -18,14 +22,22 @@ class ResultsRow extends JLabel implements MouseListener {
         add(new ResultsField(20, rowData.get(2), rowLoc));
         add(new ResultsField(120, rowData.get(3), rowLoc));
         add(new ResultsField(50, rowData.get(5), rowLoc));
+
+        layer = 2;
+        contentRows = new ArrayList<>();
+        expanded = false;
         fields = getComponents();
+        enContext = rowData.get(1);
+        deContext = rowData.get(4);
 
         for (Component label : fields) {
             label.addMouseListener(this);
         }
+    }
 
-        enContext = rowData.get(1);
-        deContext = rowData.get(4);
+    ResultsRow() {
+        setBackground(Color.yellow);
+        layer = 1;
     }
 
 
@@ -34,12 +46,14 @@ class ResultsRow extends JLabel implements MouseListener {
         ResultsField germanTranslation = (ResultsField) fields[3];
         java.util.List<ArrayList<String>> verbInfo = Verb.generateVerbInfo(germanTranslation.text);
 
-        for (ArrayList<String> tense : verbInfo) {
-            for (String conjugation : tense) {
-                System.out.print(conjugation + ", ");
-            }
-            System.out.println();
+        ResultsPanel parent = (ResultsPanel) getParent();
+        if (expanded) {
+            parent.collapseRow(this);
+
+        } else {
+            parent.expandRow(this);
         }
+        expanded = !expanded;
     }
 
     @Override
@@ -67,7 +81,6 @@ class ResultsRow extends JLabel implements MouseListener {
             ((ResultsField) label).unhighlight();
         }
 
-        repaint();
         revalidate();
     }
 

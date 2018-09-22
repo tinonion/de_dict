@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,8 +25,15 @@ class ResultsPanel extends JLayeredPane {
 
         try {
             while (results.next() && sections.size() <= 3) {
-                String gramType = results.getString(8);
+                ArrayList<String> rowData = new ArrayList<>();
+                int databaseSize = 8;
+                for (int colInd = 1; colInd <= databaseSize; colInd++) {
+                    rowData.add(results.getString(colInd));
+                }
+                // Placeholder for popularity rating
+                rowData.add("");
 
+                String gramType = rowData.get(ResultInfo.GRAM_TYPE.ordinal());
                 // Checks if sections are too large before continuing
                 if (sections.containsKey(gramType) && sections.get(gramType).size() >= 5) {
                     continue;
@@ -33,16 +41,6 @@ class ResultsPanel extends JLayeredPane {
                 } else if (!sections.containsKey(gramType)) {
                     sections.put(gramType, new ArrayList<>());
                 }
-
-                ArrayList<String> rowData = new ArrayList<>();
-
-                rowData.add(results.getString(5));
-                rowData.add(results.getString(7));
-                rowData.add(results.getString(3));
-                rowData.add(results.getString(1));
-                rowData.add(results.getString(4));
-                rowData.add("N/A");
-
                 sections.get(gramType).add(rowData);
             }
             return sections;
@@ -52,6 +50,19 @@ class ResultsPanel extends JLayeredPane {
             return null;
         }
     }
+
+//    private List<ResultsRow> generateHeaderContent(List<String> rowData) {
+//        List<ResultsRow> contentRows = new ArrayList<>();
+//
+//        switch (rowData.get(ResultInfo.GRAM_TYPE.ordinal())) {
+//            case "verb":
+//                ResultsRow row1 = new ResultsRow()
+//                break;
+//            default:
+//
+//                break;
+//        }
+//    }
 
     void populateResults(ResultSet results) {
         removeAll();
@@ -68,8 +79,10 @@ class ResultsPanel extends JLayeredPane {
             for (int rowLoc = 0; rowLoc < sections.get(sectionTitle).size(); rowLoc++) {
                 ArrayList<String> rowData = sections.get(sectionTitle).get(rowLoc);
                 int rowY = 20 + yBaseline + (rowLoc * 20);
+                Color rowColor = rowLoc % 2 == 0 ? ResultsRow.lightBlue : Color.WHITE;
+                Border rowBorder = rowLoc == 0 ? ResultsRow.firstRowBorder : ResultsRow.placeholderBorder;
 
-                ResultsRow resultsRow = new ResultsRow(rowData, rowLoc);
+                ResultsRow resultsRow = new ResultsRow(rowData, rowColor, rowBorder);
                 resultsRow.setBounds(sectionX, rowY, 310, 20);
                 add(resultsRow, 2);
                 rows.add(resultsRow);
@@ -80,17 +93,14 @@ class ResultsPanel extends JLayeredPane {
         repaint();
     }
 
-    void expandRow(ResultsRow headerPanel) {
-        // Placeholder until actual contents of rows are implemented (referring to rowCnt)
-        int rowCnt = 2;
+    void expandRow(ResultsRow headerPanel, List<ResultsRow> contentRows) {
         List<ResultsRow> rowsToMove = findUnderRows(headerPanel);
+        headerPanel.contentRows = contentRows;
 
-        for (int r = 0; r < rowCnt; r++) {
-            ResultsRow contentRow = new ResultsRow();
+        for (ResultsRow contentRow : contentRows) {
             contentRow.setBounds(headerPanel.getX(),
                     headerPanel.getY(),
                     310, 20);
-            headerPanel.contentRows.add(contentRow);
             add(contentRow, 1);
             rowsToMove.add(contentRow);
 
@@ -100,7 +110,7 @@ class ResultsPanel extends JLayeredPane {
         }
     }
 
-    void collapseRow(ResultsRow headerPanel) {
+    void collapseRow(ResultsRow headerPanel, List<ResultsRow> contentRows) {
         List<ResultsRow> rowsToMove = new ArrayList<>(headerPanel.contentRows);
         rowsToMove.addAll(findUnderRows(headerPanel));
 
@@ -133,7 +143,7 @@ class ResultsPanel extends JLayeredPane {
                 bottomRow.getY() + bottomRow.getHeight() - headerPanel.getHeight());
 
         try {
-            Thread.sleep(5);
+            Thread.sleep(2);
 
         } catch (InterruptedException ex) {
             ex.printStackTrace();

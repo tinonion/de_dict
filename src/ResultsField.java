@@ -3,64 +3,36 @@ import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-class ResultsField extends JTextPane implements MouseInputListener {
-
+class ResultsField extends JTextPane {
+    private Color unhighlighted;
     private Dimension size;
-    private int rowLoc; // Used primarily to determine what color to paint field
     public String text;
 
-    ResultsField(int preferredWidth, String text) {
+    // Constructor for generic ResultsField
+    ResultsField(int width, String text) {
         setEditable(false);
         setFont(new Font("Lato", Font.PLAIN, 14));
         setText(text);
-        size = new Dimension(preferredWidth, 20);
-    }
-
-    ResultsField(int preferredWidth, String text, int rowLoc) {
-        setEditable(false);
-        setFont(new Font("Lato", Font.PLAIN, 14));
-        setText(text);
-        size = new Dimension(preferredWidth, 20);
-
-        if (rowLoc == 0) {
-            setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.DARK_GRAY));
-
-        } else {
-            setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
-        }
-
-        if (rowLoc % 2 == 0) {
-            setBackground(new Color(210, 200, 255));
-        }
+        size = new Dimension(width, 20);
     }
 
     void highlight() {
-        if (rowLoc % 2 == 0) {
-            setBackground(new Color(190, 180, 245));
+        unhighlighted = getBackground();
+        int red = (int) Math.round(unhighlighted.getRed() * 0.8);
+        int green = (int) Math.round(unhighlighted.getGreen() * 0.8);
+        int blue = (int) Math.round(unhighlighted.getBlue() * 0.8);
 
-        } else {
-            setBackground(new Color(245, 245, 245));
-        }
+        setBackground(new Color(red, green, blue));
     }
 
     void unhighlight() {
-        if (rowLoc % 2 == 0) {
-            setBackground(new Color(210, 200, 255));
-
-        } else {
-            setBackground(new Color(255, 255, 255));
-        }
+        setBackground(unhighlighted);
     }
 
     @Override
     public void setText(String t) {
         super.setText(t);
         this.text = t;
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return size;
     }
 
     @Override
@@ -71,40 +43,5 @@ class ResultsField extends JTextPane implements MouseInputListener {
     @Override
     public Dimension getMinimumSize() {
         return size;
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        System.out.println('c');
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        System.out.println("df");
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
     }
 }

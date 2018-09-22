@@ -19,10 +19,8 @@ class Verb {
     private static Pattern findVerbComponents = Pattern.compile(
             "^(an|auf|aus|bei|ein|fort|mit|nach|vor|weg|zu)?(be|emp|ent|er|ge|miss|ver|zer)?(.+?)e?n$");
 
-    static List<ArrayList<String>> generateVerbInfo(String infinitive) {
-        ArrayList<String> present;
-        ArrayList<String> imperfectPast;
-        ArrayList<String> pastParticiple;
+    static List<String> generateVerbInfo(String infinitive) {
+        ArrayList<String> verbInfo = new ArrayList<>();
 
         Matcher m = findVerbComponents.matcher(infinitive);
         String sepPrefix;
@@ -41,45 +39,43 @@ class Verb {
         try {
             if (irregVerb.next()) {
                 String pratRoot = irregVerb.getString(3);
-                pastParticiple = new ArrayList<>(
-                        Collections.singletonList(irregVerb.getString(2)));
+                String pastParticiple = irregVerb.getString(2);
 
                 if (irregVerb.getBoolean(5)) {
                     ResultSet specialVerb = Database.specialVerbQuery(infinitive);
                     if (specialVerb.next()) {
-                        present = new ArrayList<>();
                         for (Integer colInd : prasensSpecialColIndices) {
-                            present.add(specialVerb.getString(colInd));
+                            verbInfo.add(specialVerb.getString(colInd));
                         }
 
-                        imperfectPast = new ArrayList<>();
                         for (Integer colInd : prateritumSpecialColIndices) {
-                            imperfectPast.add(specialVerb.getString(colInd));
+                            verbInfo.add(specialVerb.getString(colInd));
                         }
-                        return Arrays.asList(present, imperfectPast, pastParticiple);
+                        verbInfo.add(pastParticiple);
+                        return verbInfo;
 
                     } else {
                         System.out.println("SPECIAL VERB NOT FOUND " + infinitive);
                         return null;
                     }
                 } else if (irregVerb.getBoolean(4)) {
-                    imperfectPast = appendVerbEndings(pratRoot, weakPrateritumEndings);
+                    verbInfo.addAll(appendVerbEndings(pratRoot, weakPrateritumEndings));
 
                 } else {
-                    imperfectPast = appendVerbEndings(pratRoot, strongPrateritumEndings);
+                    verbInfo.addAll(appendVerbEndings(pratRoot, strongPrateritumEndings));
                 }
-                present = appendVerbEndings(verbRoot, prasensEndings);
-                return Arrays.asList(present, imperfectPast, pastParticiple);
+                verbInfo.addAll(appendVerbEndings(verbRoot, prasensEndings));
+                verbInfo.add(pastParticiple);
+                return verbInfo;
              }
 
         } catch (SQLException | NullPointerException ex) {
             ex.printStackTrace();
         }
-        present = appendVerbEndings(verbRoot, prasensEndings);
-        imperfectPast = appendVerbEndings(verbRoot, weakPrateritumEndings);
-        pastParticiple = new ArrayList<>(
-                Collections.singletonList(createRegularPastParticiple(sepPrefix, insepPrefix, verbRoot)));
-        return Arrays.asList(present, imperfectPast, pastParticiple);
+        verbInfo.addAll(appendVerbEndings(verbRoot, prasensEndings));
+        verbInfo.addAll(appendVerbEndings(verbRoot, weakPrateritumEndings));
+        verbInfo.add(createRegularPastParticiple(sepPrefix, insepPrefix, verbRoot));
+        return verbInfo;
     }
 
     private static ArrayList<String> appendVerbEndings(String verbRoot, List<String> endings) {

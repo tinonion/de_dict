@@ -1,5 +1,9 @@
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.CharSequenceReader;
+
 import javax.swing.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.Arrays;
 
@@ -14,9 +18,9 @@ class Database {
         con = DriverManager.getConnection("jdbc:hsqldb:file:db/database", "SA", "");
 
         // Following block is used in executable jar version of project
-//        InputStream initDict = Database.class.getResourceAsStream("init_dict.sql");
+        InputStream initDict = Database.class.getResourceAsStream("init_dict.sql");
 //        InputStream initVerbs = Database.class.getResourceAsStream("init_verbs.sql");
-//        con.createStatement().execute(IOUtils.toString(initDict, StandardCharsets.UTF_8.name()));
+        con.createStatement().execute(IOUtils.toString(initDict, StandardCharsets.UTF_8.name()));
 //        con.createStatement().execute(IOUtils.toString(initVerbs, StandardCharsets.UTF_8.name()));
 
         con.createStatement().execute(Main.readToString("init_dict.sql"));
